@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-
+import{Ban} from"lucide-react";
 import Cartproduct from "../components/Cartproduct";
 
 function Cart({ cart, setCart,item,product }) {
+ 
   const [cartCopy, setcartCopy] = useState([]);
   useEffect(() => {
     setcartCopy([...cart]);
@@ -22,7 +23,14 @@ function Cart({ cart, setCart,item,product }) {
     }
   }, [cartCopy]);
 
+
   return (
+
+    <div>{
+
+     cart.length === 0 ? <div className="flex flex-col justify-center items-center gap-4 bg-gray-300  py-25 "><Ban className="text-red-500 w-15 h-15"/><p>No Items Found In cart</p><button className=" border rounded-2xl bg-teal-400  py-2 px-6">Shop Now</button></div> :
+     
+   
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 border rounded-lg">
         <div className="grid grid-cols-3 p-4 border-b font-semibold">
@@ -30,7 +38,7 @@ function Cart({ cart, setCart,item,product }) {
           <p className="text-center">Quantity</p>
           <p className="text-right">Price</p>
         </div>
-
+ 
         {cart.map((item) => (
           <Cartproduct
             cart={cart}
@@ -82,7 +90,10 @@ function Cart({ cart, setCart,item,product }) {
         </button>
       </div>
     </div>
+   
+      }</div>
   );
 }
+ 
 
 export default Cart;

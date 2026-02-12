@@ -1,5 +1,8 @@
 import { Trash2 } from "lucide-react";
+import { useEffect } from "react";
 function Cartproduct({ cart, setCart, item, cartCopy, setcartCopy, title }) {
+  useEffect(() => {}, [cart]);
+
   function handleincrement(product) {
     setcartCopy((prev) => [...prev, product]);
   }
@@ -11,15 +14,22 @@ function Cartproduct({ cart, setCart, item, cartCopy, setcartCopy, title }) {
     setcartCopy(cartCopyRemove);
   }
 
+  const removeItem = (title) => {
+    const removeItem = cart.filter((item) => item.title !== title);
+    const removeCartCopy = cartCopy.filter((item) => item.title !== title);
 
+    console.log(removeItem);
+    setCart(removeItem);
+    setcartCopy(removeCartCopy);
+    if (removeItem.length === 0) {
+      localStorage.removeItem("cart");
+      localStorage.removeItem("cartCopy");
+    }
+  };
 
-
-
-
-
-//   const removeItem = (product) => {
-// setCart(cart.filter((title) => item.title !== title));
-// };
+  //   const removeItem = (product) => {
+  // setCart(cart.filter((title) => item.title !== title));
+  // };
   return (
     <div className="grid grid-cols-3 items-center p-4 border-b">
       <div className="flex gap-4 items-center">
@@ -64,10 +74,15 @@ function Cartproduct({ cart, setCart, item, cartCopy, setcartCopy, title }) {
       </div>
 
       <div className="flex justify-end items-center gap-4  relative group">
-        <p className="font-medium">KSh {cartCopy.filter((cartitem) => cartitem.title === item.title).reduce((acc,curr)=>acc+curr.price,0)}</p>
+        <p className="font-medium">
+          KSh{" "}
+          {cartCopy
+            .filter((cartitem) => cartitem.title === item.title)
+            .reduce((acc, curr) => acc + curr.price, 0)}
+        </p>
 
         <button onClick={() => removeItem(item.title)}>
-          <Trash2 className="w-5 text-red-500 absolute mx-4 hidden group-hover:block cursor-pointer" />
+          <Trash2 className="w-5 text-red-500 relative  hidden group-hover:block cursor-pointer" />
         </button>
       </div>
     </div>

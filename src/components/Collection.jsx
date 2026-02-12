@@ -1,14 +1,13 @@
 import { Heart } from "lucide-react";
 import heart from "../assets/images/heart.png";
-import { git, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Collection({ img, title, price, cart, setCart }) {
   const [addedToCart, setAddedToCart] = useState(false);
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
     if (cartItems) {
-      const foundItem =
-       cartItems.find((item) => item.title === title);
+      const foundItem = cartItems.find((item) => item.title === title);
       foundItem && foundItem.title === title
         ? setAddedToCart(true)
         : setAddedToCart(false);
